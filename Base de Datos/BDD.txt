@@ -1,0 +1,431 @@
+USE [master]
+GO
+/****** Object:  Database [ClubDeportivo]    Script Date: 9/11/2020 00:16:11 ******/
+CREATE DATABASE [ClubDeportivo]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'ClubDeportivo', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ClubDeportivo.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'ClubDeportivo_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ClubDeportivo_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [ClubDeportivo] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [ClubDeportivo].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [ClubDeportivo] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [ClubDeportivo] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [ClubDeportivo] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [ClubDeportivo] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [ClubDeportivo] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [ClubDeportivo] SET  MULTI_USER 
+GO
+ALTER DATABASE [ClubDeportivo] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [ClubDeportivo] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [ClubDeportivo] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [ClubDeportivo] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [ClubDeportivo] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [ClubDeportivo] SET QUERY_STORE = OFF
+GO
+USE [ClubDeportivo]
+GO
+/****** Object:  Table [dbo].[Actividades]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Actividades](
+	[idActividad] [int] IDENTITY(1,1) NOT NULL,
+	[NombreActividad] [varchar](50) NOT NULL,
+	[precioActividad] [real] NOT NULL,
+	[estadoActividad] [bit] NOT NULL,
+ CONSTRAINT [PK_Actividades] PRIMARY KEY CLUSTERED 
+(
+	[idActividad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ActividadesXSocio]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ActividadesXSocio](
+	[idSocio] [int] NOT NULL,
+	[idActividad] [int] NOT NULL,
+	[estadoInscripcion] [bit] NOT NULL,
+ CONSTRAINT [PK_ActividadesXSocio] PRIMARY KEY CLUSTERED 
+(
+	[idSocio] ASC,
+	[idActividad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Cuotas]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cuotas](
+	[idCuotas] [smallint] IDENTITY(1,1) NOT NULL,
+	[nroCuota] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Cuotas] PRIMARY KEY CLUSTERED 
+(
+	[idCuotas] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Login]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Login](
+	[idUsuario] [int] IDENTITY(1,1) NOT NULL,
+	[usuario] [varchar](50) NOT NULL,
+	[password] [varchar](8) NOT NULL,
+ CONSTRAINT [PK_Login] PRIMARY KEY CLUSTERED 
+(
+	[idUsuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Nacionalidades]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Nacionalidades](
+	[idNacionalidad] [int] IDENTITY(1,1) NOT NULL,
+	[descripcionNacionalidad] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Nacionalidades] PRIMARY KEY CLUSTERED 
+(
+	[idNacionalidad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Noticias]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Noticias](
+	[idNoticia] [int] IDENTITY(1,1) NOT NULL,
+	[idActividad] [int] NOT NULL,
+	[descripcionNoticia] [varchar](140) NOT NULL,
+	[estadoNoticia] [bit] NOT NULL,
+ CONSTRAINT [PK_Noticias] PRIMARY KEY CLUSTERED 
+(
+	[idNoticia] ASC,
+	[idActividad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pagos]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pagos](
+	[idPago] [int] IDENTITY(1,1) NOT NULL,
+	[idCuota] [smallint] NOT NULL,
+	[idSocio] [int] NOT NULL,
+	[monto] [real] NOT NULL,
+	[fechaPago] [varchar](50) NOT NULL,
+	[fechaVencimiento] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Pagos] PRIMARY KEY CLUSTERED 
+(
+	[idPago] ASC,
+	[idCuota] ASC,
+	[idSocio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Socios]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Socios](
+	[idSocio] [int] IDENTITY(1,1) NOT NULL,
+	[nombreSocio] [varchar](50) NOT NULL,
+	[apellidoSocio] [varchar](50) NOT NULL,
+	[telefonoSocio] [bigint] NOT NULL,
+	[direccionSocio] [varchar](100) NOT NULL,
+	[fechaNacimiento] [varchar](50) NOT NULL,
+	[idNacionalidad] [int] NOT NULL,
+	[idTipoDocumento] [int] NOT NULL,
+	[nroDocumentoSocio] [int] NOT NULL,
+	[email] [varchar](50) NOT NULL,
+	[estadoSocio] [bit] NOT NULL,
+ CONSTRAINT [PK_Socios] PRIMARY KEY CLUSTERED 
+(
+	[idSocio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TiposDocumentos]    Script Date: 9/11/2020 00:16:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TiposDocumentos](
+	[idTipoDocumento] [int] IDENTITY(1,1) NOT NULL,
+	[descripcionDocumento] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_TiposDocumentos] PRIMARY KEY CLUSTERED 
+(
+	[idTipoDocumento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Actividades] ON 
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (1, N'Crossfit', 2500, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (2, N'Tennis', 1569, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (3, N'Basket', 2225, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (4, N'Futbol', 2110, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (5, N'Funcional', 1963, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (6, N'Pileta', 2500, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (7, N'Patin', 1845, 1)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (8, N'Para Borrar', 123654, 0)
+GO
+INSERT [dbo].[Actividades] ([idActividad], [NombreActividad], [precioActividad], [estadoActividad]) VALUES (9, N'Yoga', 2200, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Actividades] OFF
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (1, 1, 1)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (1, 3, 1)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (4, 2, 1)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (4, 4, 1)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (5, 1, 0)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (5, 2, 1)
+GO
+INSERT [dbo].[ActividadesXSocio] ([idSocio], [idActividad], [estadoInscripcion]) VALUES (5, 7, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Cuotas] ON 
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (1, N'ENERO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (2, N'FEBRERO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (3, N'MARZO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (4, N'ABRIL')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (5, N'MAYO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (6, N'JUNIO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (7, N'JULIO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (8, N'AGOSTO')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (9, N'SEPTIEMBRE')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (10, N'OCTUBRE')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (11, N'NOVIEMBRE')
+GO
+INSERT [dbo].[Cuotas] ([idCuotas], [nroCuota]) VALUES (12, N'DICIEMBRE')
+GO
+SET IDENTITY_INSERT [dbo].[Cuotas] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Nacionalidades] ON 
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (1, N'ARGENTINA')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (2, N'BOLIVIA')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (3, N'BRASIL')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (4, N'CHILE')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (5, N'COLOMBIA')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (6, N'PERU')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (7, N'PARAGUAY')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (8, N'URUGUAY')
+GO
+INSERT [dbo].[Nacionalidades] ([idNacionalidad], [descripcionNacionalidad]) VALUES (9, N'OTRO')
+GO
+SET IDENTITY_INSERT [dbo].[Nacionalidades] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Noticias] ON 
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (1, 7, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 0)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (2, 1, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 1)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (3, 4, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 0)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (4, 4, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 0)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (5, 3, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 1)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (6, 6, N'Este viernes la pileta estarÃ¡ cerrada por mantenimiento. Gracias', 1)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (7, 6, N'Debido a los hechos de publico Conocimiento, solo podran hacer actividades aquellos que tengan el Barbijo', 1)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (8, 2, N'El Profe Gaudio los espera a todos luego de su licencia', 1)
+GO
+INSERT [dbo].[Noticias] ([idNoticia], [idActividad], [descripcionNoticia], [estadoNoticia]) VALUES (9, 2, N'El domingo en el quincho del club veremos la final del Roland Garros. Los Esperamos', 1)
+GO
+SET IDENTITY_INSERT [dbo].[Noticias] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Pagos] ON 
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (1, 1, 1, 4725, N'1/11/2020', N'1/11/2020')
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (2, 1, 1, 4725, N'1/11/2020', N'1/11/2020')
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (3, 1, 1, 4725, N'1/11/2020', N'1/11/2020')
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (4, 1, 5, 3414, N'1/11/2020', N'1/11/2020')
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (5, 5, 5, 3414, N'1/11/2020', N'1/11/2020')
+GO
+INSERT [dbo].[Pagos] ([idPago], [idCuota], [idSocio], [monto], [fechaPago], [fechaVencimiento]) VALUES (6, 9, 5, 3414, N'1/11/2020', N'1/11/2020')
+GO
+SET IDENTITY_INSERT [dbo].[Pagos] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Socios] ON 
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (1, N'Lucas', N'Garcia', 233456, N'callecita 5678', N'12-15-1985', 3, 1, 25986763, N'lucas@hotmail.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (2, N'Fernanda', N'Paredes', 784663213, N'casas 321321', N'22-65-1987', 1, 2, 4785963, N'fer@cba.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (3, N'Milton', N'Gorra', 9543307348, N'10290 E Bay Harbor dr', N'12-12-1236', 9, 1, 12348569, N'milton@casco.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (4, N'Carolina', N'Mesa', 8487654, N'benavidez 5896', N'25/10/1990', 1, 1, 396567456, N'caro@caro.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (5, N'Miguel Fulgencio', N'Wazowski', 123638123, N'duarte quiroz 3216', N'25/05/2020', 1, 4, 456892, N'mike@mthedog.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (6, N'Lola', N'Mora', 7859654, N'sevilla 8696', N'12/12/1912', 4, 3, 455546334, N'lola@mora.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (7, N'Borrar', N'Socio', 32354, N'porque si 5852', N'15/78/963', 2, 2, 12237487, N'si@no.com', 0)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (8, N'Irene', N'Aguirre', 31321321, N'Obispo Trejo 78946', N'23/10/1990', 9, 3, 32132435, N'irene@queenof.com', 1)
+GO
+INSERT [dbo].[Socios] ([idSocio], [nombreSocio], [apellidoSocio], [telefonoSocio], [direccionSocio], [fechaNacimiento], [idNacionalidad], [idTipoDocumento], [nroDocumentoSocio], [email], [estadoSocio]) VALUES (9, N'jackson', N'rico', 9543307348, N'santa rosa 67575757', N'15-05-1912', 2, 1, 23241324, N'tito@tito.com', 0)
+GO
+SET IDENTITY_INSERT [dbo].[Socios] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TiposDocumentos] ON 
+GO
+INSERT [dbo].[TiposDocumentos] ([idTipoDocumento], [descripcionDocumento]) VALUES (1, N'DNI')
+GO
+INSERT [dbo].[TiposDocumentos] ([idTipoDocumento], [descripcionDocumento]) VALUES (2, N'LIBRETA CIVICA')
+GO
+INSERT [dbo].[TiposDocumentos] ([idTipoDocumento], [descripcionDocumento]) VALUES (3, N'PASAPORTE')
+GO
+INSERT [dbo].[TiposDocumentos] ([idTipoDocumento], [descripcionDocumento]) VALUES (4, N'OTRO')
+GO
+SET IDENTITY_INSERT [dbo].[TiposDocumentos] OFF
+GO
+ALTER TABLE [dbo].[ActividadesXSocio]  WITH CHECK ADD  CONSTRAINT [FK_ActividadesXSocio_Actividades] FOREIGN KEY([idActividad])
+REFERENCES [dbo].[Actividades] ([idActividad])
+GO
+ALTER TABLE [dbo].[ActividadesXSocio] CHECK CONSTRAINT [FK_ActividadesXSocio_Actividades]
+GO
+ALTER TABLE [dbo].[ActividadesXSocio]  WITH CHECK ADD  CONSTRAINT [FK_ActividadesXSocio_Socios] FOREIGN KEY([idSocio])
+REFERENCES [dbo].[Socios] ([idSocio])
+GO
+ALTER TABLE [dbo].[ActividadesXSocio] CHECK CONSTRAINT [FK_ActividadesXSocio_Socios]
+GO
+ALTER TABLE [dbo].[Cuotas]  WITH CHECK ADD  CONSTRAINT [FK_Cuotas_Cuotas] FOREIGN KEY([idCuotas])
+REFERENCES [dbo].[Cuotas] ([idCuotas])
+GO
+ALTER TABLE [dbo].[Cuotas] CHECK CONSTRAINT [FK_Cuotas_Cuotas]
+GO
+ALTER TABLE [dbo].[Noticias]  WITH CHECK ADD  CONSTRAINT [FK_Noticias_Actividades] FOREIGN KEY([idActividad])
+REFERENCES [dbo].[Actividades] ([idActividad])
+GO
+ALTER TABLE [dbo].[Noticias] CHECK CONSTRAINT [FK_Noticias_Actividades]
+GO
+ALTER TABLE [dbo].[Pagos]  WITH CHECK ADD  CONSTRAINT [FK_Pagos_Cuotas] FOREIGN KEY([idCuota])
+REFERENCES [dbo].[Cuotas] ([idCuotas])
+GO
+ALTER TABLE [dbo].[Pagos] CHECK CONSTRAINT [FK_Pagos_Cuotas]
+GO
+ALTER TABLE [dbo].[Pagos]  WITH CHECK ADD  CONSTRAINT [FK_Pagos_Socios] FOREIGN KEY([idSocio])
+REFERENCES [dbo].[Socios] ([idSocio])
+GO
+ALTER TABLE [dbo].[Pagos] CHECK CONSTRAINT [FK_Pagos_Socios]
+GO
+ALTER TABLE [dbo].[Socios]  WITH CHECK ADD  CONSTRAINT [FK_Socios_Nacionalidades] FOREIGN KEY([idNacionalidad])
+REFERENCES [dbo].[Nacionalidades] ([idNacionalidad])
+GO
+ALTER TABLE [dbo].[Socios] CHECK CONSTRAINT [FK_Socios_Nacionalidades]
+GO
+ALTER TABLE [dbo].[Socios]  WITH CHECK ADD  CONSTRAINT [FK_Socios_TiposDocumentos] FOREIGN KEY([idTipoDocumento])
+REFERENCES [dbo].[TiposDocumentos] ([idTipoDocumento])
+GO
+ALTER TABLE [dbo].[Socios] CHECK CONSTRAINT [FK_Socios_TiposDocumentos]
+GO
+USE [master]
+GO
+ALTER DATABASE [ClubDeportivo] SET  READ_WRITE 
+GO
